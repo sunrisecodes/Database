@@ -52,3 +52,33 @@ SELECT E.*, D.*
 FROM Employee E
 left outer join Dependent D
 on E.SSN = D.ESSN
+--9
+SELECT E.Fname +' ' + E.Lname As [Employee Name], p.Pname
+from Employee E join Works_for W
+on E.SSN = W.ESSn
+join Project P
+on p.Pnumber = W.Pno
+order By P.Pname
+
+--10
+SELECT P.Pnumber, D.Dname as [Controlling Department], E.Lname As [Manager LastName], E.Bdate, E.Address
+FROM Project P
+join Departments D
+on p.Dnum = D.Dnum and p.City ='Cairo'
+join Employee E
+on D.MGRSSN = E.SSN
+
+--11
+SELECT E.Fname + ' ' + E.Lname As [Manager Name],
+       E.Bdate , 
+	   E.Address
+FROM Employee E
+join Departments D
+on E.SSN = D.MGRSSN
+ 
+ --11
+ SELECT Distinict y.Fname + ' ' + y.Lname As [Manager Name],
+        y.Bdate
+ from Employee x 
+ join Employee y
+ on x.Superssn = y.SSN
