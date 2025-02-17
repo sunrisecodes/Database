@@ -1,11 +1,9 @@
 SELECT
-   x.machine_id,
-   round(avg(y.timestamp - x.timestamp ),3 ) as processing_time 
-from Activity x
-JOIN Activity y
-    on  x.machine_id = y.machine_id 
-    and x.process_id = y.process_id 
-WHERE
-    x.activity_type ='start'
-    and y.activity_type ='end'
-GROUP By x.machine_id
+    machine_id,
+    ROUND(
+        (SUM( CASE WHEN activity_type = 'end' then timestamp END)-
+        SUM( CASE WHEN activity_type = 'start' then timestamp END)) 
+        / count(distinct process_id) ,3
+    ) As processing_time 
+FROM Activity 
+GROUP BY machine_id 
